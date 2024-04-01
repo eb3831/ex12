@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         displayNum = findViewById(R.id.displayNum);
     }
+
     public void calculateResult()
     {
         String input = displayNum.getText().toString();
