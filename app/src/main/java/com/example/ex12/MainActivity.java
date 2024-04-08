@@ -21,92 +21,97 @@ public class MainActivity extends AppCompatActivity {
 
         displayNum = findViewById(R.id.displayNum);
     }
-
-    public void calculateResult()
-    {
-        String input = displayNum.getText().toString();
-        if ((input.charAt(0) == '-' ) || ((input.charAt(0) <= '9') && (input.charAt(0) >= '0')))
-        {
-            num = Double.parseDouble(displayNum.getText().toString());
+    public void calcResult(){
+        if (isValidNum()){
+            if (action != "=")
             {
-                if (action == "+")
+                num = Double.parseDouble(displayNum.getText().toString());
+            }
+            else
+            {
+                num = 0;
+            }
+            if (action == "+")
+            {
+                result = result + num;
+            }
+            if (action == "-"){
+                result = result - num;
+            }
+            if (action == "*"){
+                result = result * num;
+            }
+            if (action == "/" )
+            {
+                if (num != 0)
                 {
-                    result = result + num;
+                    result = result / num;
                 }
-                else if (action == "-")
+                else
                 {
-                    result = result - num;
+                    Toast.makeText(this, "illegal input", Toast.LENGTH_SHORT).show();
+                    result = 0;
+                    action = "+";
                 }
-                else if (action == "*")
-                {
-                    result = result * num;
-                }
-                else if (action == "/" )
-                {
-                    if (num != 0)
-                    {
-                        result = result / num;
-                    }
-                    else
-                    {
-                        Toast.makeText(this, "ILLEGAL ACTION", Toast.LENGTH_SHORT).show();
-                        result = 0;
-                        action = "+";
-                    }
-                }
-
             }
         }
         else
         {
-            Toast.makeText(this, "ILLEGAL INPUT", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "illegal input", Toast.LENGTH_SHORT).show();
             result = 0;
             num = 0;
             action = "+";
         }
     }
 
-    public void clickedPlus(View view) {
-        if (!displayNum.getText().toString().isEmpty()) {
-            calculateResult();
-            displayNum.setText("");
-            action = "+";
-        }
-        else {
-            Toast.makeText(this, "ILLEGAL INPUT", Toast.LENGTH_SHORT).show();
-            action = "+";}
+    public boolean isValidNum()
+    {
+        String input = displayNum.getText().toString();
+
+        return !((input == "") ||
+                (input == "-") ||
+                (input == ".") ||
+                (input == "+") ||
+                (input == "-."));
     }
 
-    public void clickedMinus(View view) {
-        if (!displayNum.getText().toString().isEmpty()) {
-            calculateResult();
+    public void clickedPlus(View view)
+    {
+        if (!displayNum.getText().toString().isEmpty())
+        {
+            calcResult();
             displayNum.setText("");
-            action = "-";
         }
-        else {
-            Toast.makeText(this, "ILLEGAL INPUT", Toast.LENGTH_SHORT).show();
-            action = "+";}
+        action="+";
     }
 
-    public void clickedMulti(View view) {
-        if (!displayNum.getText().toString().isEmpty()) {
-            calculateResult();
+    public void clickedMinus(View view)
+    {
+        if (!displayNum.getText().toString().isEmpty())
+        {
+            calcResult();
             displayNum.setText("");
-            action = "*";}
-        else {
-            Toast.makeText(this, "ILLEGAL INPUT", Toast.LENGTH_SHORT).show();
-            action = "+";}
         }
+        action = "-";
+    }
+
+    public void clickedMulti(View view)
+    {
+        if (!displayNum.getText().toString().isEmpty())
+        {
+            calcResult();
+            displayNum.setText("");
+        }
+        action = "*";
+    }
 
     public void clickedDivision(View view) {
         if (!displayNum.getText().toString().isEmpty()) {
-            calculateResult();
+            calcResult();
             displayNum.setText("");
-            action = "/";}
-        else {
-                Toast.makeText(this, "ILLEGAL INPUT", Toast.LENGTH_SHORT).show();
-                action = "+";}
-            }
+        }
+        action= "/";
+    }
 
     public void clickedDelete(View view) {
         result = 0;
@@ -118,14 +123,10 @@ public class MainActivity extends AppCompatActivity {
     public void clickedSolve(View view) {
         if (!displayNum.getText().toString().isEmpty()) {
             num = Double.parseDouble(displayNum.getText().toString());
-            calculateResult();
-            displayNum.setText(String.valueOf(result));
-            action = "=";
+            calcResult();
         }
-        else {
-            Toast.makeText(this, "ILLEGAL INPUT", Toast.LENGTH_SHORT).show();
-            action = "+";
-        }
+        displayNum.setText(String.valueOf(result));
+        action = "=";
     }
 
     public void clickedCredits(View view) {
