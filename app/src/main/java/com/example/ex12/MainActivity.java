@@ -135,19 +135,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickedSolve(View view) {
-        if (!displayNum.getText().toString().isEmpty() || isValidNum(temp)) {
-            num = Double.parseDouble(displayNum.getText().toString());
-            calcResult();
+        temp = displayNum.getText().toString();
+        if (isValidNum(temp)) {
+            if (action == ' ') {
+                num1 = Double.parseDouble(temp);
+            } else {
+                num2 = Double.parseDouble(temp);
+                if (action == '+') {
+                    num1 = num1 + num2;
+                }
+            }
+            displayNum.setHint("");
+            displayNum.setText(""+num1);
+            action = ' ';
+        } else {
+            Toast.makeText(this, "Wrong input !", Toast.LENGTH_SHORT).show();
+            displayNum.setHint(""+num1);
+            displayNum.setText("");
         }
-        else
-        {
-            Toast.makeText(this, "illegal input", Toast.LENGTH_SHORT).show();
-            result = 0;
-            num = 0;
-            action = '+';
-        }
-        displayNum.setText(String.valueOf(result));
-        action = '=';
     }
 
     public void clickedCredits(View view) {
