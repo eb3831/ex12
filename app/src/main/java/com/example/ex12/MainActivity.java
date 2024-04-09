@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickedDelete(View view) {
-        result = 0;
-        num = 0;
-        action = '+';
+        num1 = 0;
+        action = ' ';
+        displayNum.setHint("");
         displayNum.setText("");
     }
 
